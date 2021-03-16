@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-const TodoWrapper = styled.div`
+export const TodoWrapper = styled.div`
     border: 1px solid white;
     background-color: ${props => props.theme.lightText};
     padding: 1rem;
@@ -13,12 +13,16 @@ const TodoWrapper = styled.div`
     p {
         text-decoration: ${props => props.completed ? 'line-through' : ''};
     }
+
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
 `
 
 export default function Todo(props) {
-    const { todo, toggleCompleted } = props
+    const { todo, toggleCompleted, className } = props
     return (
-        <TodoWrapper onDoubleClick={_ => toggleCompleted(todo.id)} completed={todo.completed}>
+        <TodoWrapper onDoubleClick={_ => toggleCompleted(todo.id)} completed={todo.completed} className={className}>
             <p>{todo.task}</p>
             <input 
                 type="checkbox"

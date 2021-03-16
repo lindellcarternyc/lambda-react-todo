@@ -1,30 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
-import Todo from './Todo'
+import AnimatedTodo  from './AnimatedTodo'
 
-const TodoListWrapper = styled.ul`
+const TodoListWrapper = styled.div`
     max-width: 600px;
     margin: 0 auto;
-    list-style: none;
-    & > li {
-        margin-bottom: 1rem;
-    }
+    overflow-x: hidden;
 `
 
 export default function TodoList(props) {
-    const { todos, toggleCompleted, clearCompleted } = props
+    const { todos, toggleCompleted } = props
     return (
         <TodoListWrapper>
-            {todos.map(todo => (
-                <li key={todo.id}>
-                    <Todo  
-                        todo={todo} 
-                        toggleCompleted={toggleCompleted} 
-                        clearCompleted={clearCompleted}
-                    />
-                </li>
-            ))}
+            <TransitionGroup>
+                {todos.map(todo => (
+                    <CSSTransition
+                        classNames="item"
+                        timeout={500}
+                        key={todo.id}
+                    >
+                        <AnimatedTodo
+                            todo={todo} 
+                            toggleCompleted={toggleCompleted}
+                        />
+                    </CSSTransition>
+                ))}
+            </TransitionGroup>
         </TodoListWrapper>
     )
 }
